@@ -2,7 +2,8 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import login from '../views/login.vue'
 import main from '../views/main.vue'
-
+import Judge from '../components/Judge.vue'
+import record from '../components/record.vue'
 Vue.use(VueRouter)
 
 
@@ -15,7 +16,14 @@ const router = new VueRouter({
             {
                 path: '/main',
                 name: 'main',
-                component: main
+                component: main,
+                children: [{
+                    path: '/Judge',
+                    component: Judge
+                }, {
+                    path: '/record',
+                    component: record
+                }]
             }
         ]
     })

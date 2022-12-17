@@ -1,13 +1,13 @@
-import { Select, Option, OptionGroup, Input, Tree, Dialog, Row, Col, Button, Message, Form, FormItem } from 'element-ui'
-import VueAxios from 'vue-axios'
+import { Aside, Container, Header, Input, Main, Dialog, Row, Col, Button, Message, Form, FormItem, Menu, MenuItem } from 'element-ui'
+
 
 const element = {
     install: function(Vue) {
-        Vue.use(Select)
-        Vue.use(Option)
-        Vue.use(OptionGroup)
+        Vue.use(Aside)
+        Vue.use(Container)
+        Vue.use(Header)
         Vue.use(Input)
-        Vue.use(Tree)
+        Vue.use(Main)
         Vue.use(Dialog)
         Vue.use(Row)
         Vue.use(Col)
@@ -17,7 +17,8 @@ const element = {
         Vue.prototype.$message = Message
         Vue.use(Form)
         Vue.use(FormItem)
-
+        Vue.use(Menu)
+        Vue.use(MenuItem)
     }
 }
 
