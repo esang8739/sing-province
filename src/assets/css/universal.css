@@ -3,3 +3,21 @@
     padding: 0;
     box-sizing: border-box;
 }
+
+.el-pagination.is-background.el-pager li:not(.disabled) {
+    background-color: #fff;
+    /*进行修改未选中背景和字体*/
+    color: #fff;
+}
+
+.el-pagination.is-background.el-pager li:not(.disabled).active {
+    background-color: #ff0000 !important;
+    /*进行修改选中项背景和字体*/
+    color: #fff;
+}
+
+.el-pager li.active {
+    background-color: #ff0000 !important;
+    color: #fff;
+    /*仅设置active时的文字颜色*/
+}

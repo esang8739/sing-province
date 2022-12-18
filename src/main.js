@@ -13,7 +13,7 @@ Vue.prototype.$http = axios;
 // 添加请求拦截器
 axios.interceptors.request.use(function(config) {
     //添加请求头
-
+    config.headers.Authorization = window.sessionStorage.getItem('token')
     return config;
 }, function(error) {
     // 对请求错误做些什么

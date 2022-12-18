@@ -1,4 +1,4 @@
-import { Aside, Container, Header, Input, Main, Dialog, Row, Col, Button, Message, Form, FormItem, Menu, MenuItem } from 'element-ui'
+import { Aside, Container, Header, Input, Main, Dialog, Row, Col, Button, Message, Form, FormItem, Menu, MenuItem, Card, Select, Option, Table, TableColumn, Pagination } from 'element-ui'
 
 
 const element = {
@@ -19,6 +19,12 @@ const element = {
         Vue.use(FormItem)
         Vue.use(Menu)
         Vue.use(MenuItem)
+        Vue.use(Card)
+        Vue.use(Select)
+        Vue.use(Option)
+        Vue.use(Table)
+        Vue.use(TableColumn)
+        Vue.use(Pagination)
     }
 }
 

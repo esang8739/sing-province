@@ -85,7 +85,7 @@ export default {
                 window.sessionStorage.setItem("token", res.data.data);
                 this.$router.push("/main");
               } else {
-                this.$message.error("登陆失败！");
+                this.$message.error(res.data.msg);
               }
             });
         }

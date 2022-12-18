@@ -19,10 +19,12 @@ const router = new VueRouter({
                 component: main,
                 children: [{
                     path: '/Judge',
-                    component: Judge
+                    component: Judge,
+                    name: 'Judge'
                 }, {
                     path: '/record',
-                    component: record
+                    component: record,
+                    name: 'record'
                 }]
             }
         ]
