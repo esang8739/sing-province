@@ -5,13 +5,13 @@
 }
 
 .el-pagination.is-background.el-pager li:not(.disabled) {
-    background-color: #fff;
+    background-color: #ff0000;
     /*进行修改未选中背景和字体*/
     color: #fff;
 }
 
 .el-pagination.is-background.el-pager li:not(.disabled).active {
-    background-color: #ff0000 !important;
+    background-color: #f5f4f4 !important;
     /*进行修改选中项背景和字体*/
     color: #fff;
 }
@@ -20,4 +20,10 @@
     background-color: #ff0000 !important;
     color: #fff;
     /*仅设置active时的文字颜色*/
+}
+
+a {
+    text-decoration: none;
+    color: #000;
+    cursor: grab;
 }

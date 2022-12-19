@@ -4,6 +4,8 @@ import login from '../views/login.vue'
 import main from '../views/main.vue'
 import Judge from '../components/Judge.vue'
 import record from '../components/record.vue'
+import songDetails from '../components/songDetails.vue'
+import hello from '../components/hello.vue'
 Vue.use(VueRouter)
 
 
@@ -17,14 +19,26 @@ const router = new VueRouter({
                 path: '/main',
                 name: 'main',
                 component: main,
-                children: [{
+                redirect: '/hello',
+
+                children: [{ path: '/hello', component: hello }, {
                     path: '/Judge',
                     component: Judge,
-                    name: 'Judge'
+                    name: 'Judge',
+
+
+
                 }, {
                     path: '/record',
                     component: record,
-                    name: 'record'
+                    name: 'record',
+
+
+                }, {
+                    path: '/songDetails',
+                    name: 'songDetails',
+                    component: songDetails,
+
                 }]
             }
         ]

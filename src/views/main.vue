@@ -86,4 +86,10 @@ export default {
   outline: 0 !important;
   color: #ff0000 !important;
 }
+.el-menu-item:active {
+  background: #f7f6f6 !important;
+}
+.el-menu {
+  border-right: none;
+}
 </style>

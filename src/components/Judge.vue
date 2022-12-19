@@ -7,6 +7,7 @@
     <div class="content">
       <!-- 上方搜索区域 -->
       <div class="title">
+        <!-- 下拉框搜索 -->
         <div class="activityType">
           <span>活动类型：</span
           ><el-select
@@ -23,9 +24,23 @@
             </el-option>
           </el-select>
         </div>
+        <!-- 搜索栏搜索 -->
+        <div class="search">
+          <el-input
+            placeholder="根据学校名称查询"
+            @keyup.enter.native="searchbtn"
+          >
+            <i
+              slot="suffix"
+              class="el-input__icon el-icon-search"
+              @click="searchbtn"
+            ></i>
+          </el-input>
+        </div>
       </div>
       <!-- 下方表格区域 -->
       <div class="singTable">
+        <el-button type="danger" plain @click="notPassDiaog">驳回</el-button>
         <el-table
           :data="
             singListData.slice(
@@ -35,21 +50,9 @@
           "
           stripe
           style="width: 100%"
+          @selection-change="rejectedSing"
         >
-          <el-table-column
-            type="selection"
-            width="55"
-            label="全选"
-            align="left"
-          >
-            <!--  <template slot="header" slot-scope="scope">
-              <el-input
-                v-model="search"
-                size="mini"
-                placeholder="输入关键字搜索"
-              />
-            </template> -->
-          </el-table-column>
+          <el-table-column type="selection" align="center"> </el-table-column>
           <el-table-column
             key="1"
             label="活动类型"
@@ -114,6 +117,19 @@
           >
           </el-pagination>
         </div>
+        <!-- 弹窗区域 -->
+        <el-dialog
+          title="批量驳回"
+          :visible.sync="centerDialogVisible"
+          width="30%"
+          center
+        >
+          <span>您确定批量驳回{{ this.rejectedSingName }}这些歌曲嘛？</span>
+          <span slot="footer" class="dialog-footer">
+            <el-button @click="centerDialogVisible = false">取 消</el-button>
+            <el-button type="primary" @click="rejectedSingBnt">确 定</el-button>
+          </span>
+        </el-dialog>
       </div>
     </div>
   </el-card>
@@ -124,9 +140,13 @@ export default {
     return {
       currentPage: 1, // 当前页码
       pageSize: 6, // 每页显示的行数
-      singStatus: "", //记录歌名表头渲染类型
+      singStatus: "1", //记录歌名表头渲染类型
       singListData: [], //歌曲列表数据
-      singListValue: "", //下拉框搜索值
+      singListValue: "singsong", //下拉框搜索值
+      searchValue: "", //搜索框搜索值
+      rejectedSingId: [], //批量驳回歌曲id
+      rejectedSingName: [], //批量驳回歌曲名字
+      centerDialogVisible: false, //批量驳回弹窗
       singType: [
         {
           value: "original",
@@ -145,15 +165,13 @@ export default {
   methods: {
     /* 获取所有节目 */
     getAllSing() {
-      this.singListValue = "singsong";
       this.$http
         .post("/get_all_song", {
-          table_name: "singsong",
+          table_name: this.singListValue,
           state: 1,
         })
         .then((res) => {
           this.singListData = res.data.data;
-          console.log(this.singListData);
         });
     },
     /* 获取节目数据 */
@@ -172,7 +190,7 @@ export default {
           this.singListData = res.data.data;
         });
     },
-    // 页面切换方法
+    /* 页面切换方法 */
     handleCurrentChange(val) {
       this.currentPage = val;
     },
@@ -185,6 +203,59 @@ export default {
       });
       console.log(res);
     },
+    /* 根据学校名字搜索 */
+    searchbtn() {
+      this.$http
+        .post("/get_song_by_schoolname", {
+          table_name: this.singListValue,
+          state: 1,
+          school_name: this.searchValue,
+        })
+        .then((res) => {
+          this.singListData = res.data.data;
+        });
+    },
+    /* 选择批量驳回歌曲 */
+    rejectedSing(val) {
+      this.rejectedSingId = [];
+      /* this.rejectedSingName = []; */
+      val.forEach((item) => {
+        /* this.rejectedSingName.push(item.original_name || item.singsong_name); */
+        this.rejectedSingId.push(item.id);
+      });
+      console.log(this.rejectedSingId);
+    },
+    /* 驳回弹窗 */
+    notPassDiaog() {
+      if (this.rejectedSingId.length !== 0) {
+        this.centerDialogVisible = true;
+      } else {
+        this.$message.error("请选择需要驳回曲目");
+      }
+    },
+    /* 批量驳回歌曲 */
+    rejectedSingBnt() {
+      this.$http
+        .post("/songs_overrule", {
+          table_name: this.singListValue,
+          id: this.rejectedSingId,
+          state: 4,
+        })
+        .then((res) => {
+          if (res.data.code == 200) {
+            this.$message.success("驳回该节目成功!");
+          } else {
+            this.$message.error("驳回该节目失败!");
+          }
+        });
+      this.getAllSing();
+    },
+    /* 进入节目详情 */
+    moreData(row) {
+      localStorage.setItem("stuId", row.id);
+      localStorage.setItem("tableName", this.singListValue);
+      this.$router.push("/songDetails");
+    },
   },
 };
 </script>
@@ -192,10 +263,42 @@ export default {
 /deep/.el-table-column {
   text-align: center;
 }
-.fenye {
-  width: 320px;
-  margin: 0 50%;
-  padding-top: 20px;
-  transform: translateX(-50%);
+
+.content {
+  margin-top: 65px;
+  .fenye {
+    width: 320px;
+    margin: 0 50%;
+    padding-top: 50px;
+    transform: translateX(-35%);
+  }
+  .activityType {
+    float: left;
+  }
+  .search {
+    float: right;
+    width: 298px;
+    height: 44px;
+    .search {
+      input {
+        border-radius: 44px;
+      }
+    }
+  }
+
+  .singTable {
+    position: relative;
+    top: 35px;
+    > .el-button {
+      position: absolute;
+      top: 54px;
+      left: 54px;
+      width: 55px;
+      height: 25px;
+      z-index: 1;
+      padding: 0;
+      font-size: 4px;
+    }
+  }
 }
 </style>
