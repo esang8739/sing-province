@@ -5,6 +5,7 @@ import main from '../views/main.vue'
 import Judge from '../components/Judge.vue'
 import record from '../components/record.vue'
 import songDetails from '../components/songDetails.vue'
+import origDetails from '../components/origDetails.vue'
 import hello from '../components/hello.vue'
 Vue.use(VueRouter)
 
@@ -39,6 +40,10 @@ const router = new VueRouter({
                     name: 'songDetails',
                     component: songDetails,
 
+                }, {
+                    path: '/origDetails',
+                    component: origDetails,
+                    name: 'origDetails'
                 }]
             }
         ]

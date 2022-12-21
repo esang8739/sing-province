@@ -25,13 +25,17 @@
       <!-- 侧边导航 -->
       <el-aside>
         <el-menu
+          class="el-menu-vertical-demo"
           style="background: #ff0000"
-          active-text-color="#ff0000"
-          active-background-color="#ffffff"
           router
+          :default-active="pathTag"
         >
-          <el-menu-item index="/Judge">节目审批</el-menu-item>
-          <el-menu-item index="/record">审批记录</el-menu-item>
+          <el-menu-item index="/Judge" @click="saveNavState('/Judge')"
+            >节目审批</el-menu-item
+          >
+          <el-menu-item index="/record" @click="saveNavState('/record')"
+            >审批记录</el-menu-item
+          >
         </el-menu>
       </el-aside>
       <el-main style="background: #f7f6f6">
@@ -43,11 +47,23 @@
 </template>
 <script>
 export default {
+  data() {
+    return {
+      pathTag: "",
+    };
+  },
+  created() {
+    this.pathTag = window.sessionStorage.getItem("pathTag");
+  },
   methods: {
     outsys() {
       window.sessionStorage.clear();
       localStorage.clear();
       this.$router.push("/login");
+    },
+    saveNavState(val) {
+      window.sessionStorage.setItem("pathTag", val);
+      this.pathTag = val;
     },
   },
 };
@@ -55,7 +71,7 @@ export default {
 <style lang="less" scoped>
 .main_container {
   height: 100%;
-  min-width: 1500px;
+  min-width: 1800px;
 }
 .el-header,
 .el-aside {
@@ -78,7 +94,8 @@ export default {
   height: 100%;
 }
 .el-menu-item {
-  font-size: 18px;
+  font-size: 20px;
+  font-weight: 600;
   color: #fff;
   padding-left: 30% !important;
 }
@@ -86,8 +103,9 @@ export default {
   outline: 0 !important;
   color: #ff0000 !important;
 }
-.el-menu-item:active {
-  background: #f7f6f6 !important;
+.el-menu-item.is-active {
+  background-color: #fff !important;
+  color: #ff0000;
 }
 .el-menu {
   border-right: none;

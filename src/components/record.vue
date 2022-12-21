@@ -54,6 +54,15 @@
           <el-table-column
             key="1"
             label="活动类型"
+            v-if="this.singStatus == 1"
+            header-align="center"
+            align="center"
+            >传唱征集
+          </el-table-column>
+          <el-table-column
+            key="1"
+            label="活动类型"
+            v-if="this.singStatus == 0"
             header-align="center"
             align="center"
             >原创征集
@@ -162,6 +171,14 @@ export default {
         },
       ],
     };
+  },
+  watch: {
+    //监听数据(searchValue)变量的变化，
+    searchValue() {
+      this.$nextTick(() => {
+        this.getAllSing(); //重新请求数据
+      });
+    },
   },
   created() {
     this.getAllSing();

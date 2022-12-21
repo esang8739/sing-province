@@ -12,7 +12,7 @@
     </h1>
 
     <div class="login">
-      <h1 style="color: #000">登陆</h1>
+      <h1 style="color: #000">登录</h1>
 
       <el-form
         :model="longinInfamation"
@@ -39,7 +39,7 @@
           ]"
         >
           <el-input
-            placeholder="请输入登陆密码"
+            placeholder="请输入登录密码"
             v-model="longinInfamation.password"
             ><i slot="prefix" class="el-icon-lock"></i
           ></el-input>
@@ -49,7 +49,7 @@
             type="danger"
             @click="login('loginForm')"
             :disabled="!canUpLgion"
-            >登陆</el-button
+            >登录</el-button
           >
         </el-form-item>
       </el-form>
@@ -81,7 +81,7 @@ export default {
             .post("/login_province", this.longinInfamation)
             .then((res) => {
               if (res.data.code == 200) {
-                this.$message.success("登陆成功！");
+                this.$message.success("登录成功！");
                 window.sessionStorage.setItem("token", res.data.data);
                 this.$router.push("/main");
               } else {

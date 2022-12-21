@@ -16,7 +16,8 @@
       </div>
       <div class="mp3" style="margin-top: 35px; margin-left: 20px">
         <label>音频（选报/MP3格式）</label><br /><br /><br />
-        <a :href="this.scr">点击下载</a>
+        <a :href="this.scr" download="filename" target="filename">点击下载</a>
+        <iframe name="filename" style="display: none"></iframe>
         <audio id="aud" controls="controls" :src="this.scr"></audio>
       </div>
       <div class="bnt">
