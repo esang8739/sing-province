@@ -268,6 +268,11 @@ export default {
   img {
     width: 200px;
     height: 100px;
+    transition: all 0.6s;
+  }
+  img:hover {
+    width: 600px;
+    height: 300px;
   }
   .bnt {
     position: absolute;
@@ -280,7 +285,7 @@ export default {
   .png {
     position: absolute;
     top: -382px;
-    left: 779px;
+    left: 870px;
     img {
       vertical-align: middle;
     }
