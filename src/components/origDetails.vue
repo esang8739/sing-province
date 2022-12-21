@@ -105,39 +105,33 @@
         <iframe name="filename" style="display: none"></iframe>
 
         <audio id="aud" controls="controls" :src="this.scr"></audio>
+
+        <div class="png">
+          <!-- 歌谱 -->
+          <div class="geci">
+            <span>歌&nbsp&nbsp&nbsp词：</span>
+            <img :src="this.original_word" alt="" />
+          </div>
+          <!-- 承诺书 -->
+          <div class="chengn">
+            <span>承诺书：</span>
+            <img :src="this.commitment" alt="" />
+          </div>
+        </div>
+        <div class="bnt">
+          <el-button type="danger" @click="dialogVisible = true"
+            >驳回</el-button
+          >
+          <el-button type="success" @click="psaabnt">通过</el-button>
+        </div>
       </div>
-      <div class="png">
-        <a @click="showWord = true">查看歌谱</a>
-        <a @click="showCommitment = true">查看承诺书</a>
-      </div>
-      <div class="bnt">
-        <el-button type="danger" @click="dialogVisible = true">驳回</el-button>
-        <el-button type="success" @click="psaabnt">通过</el-button>
-      </div>
+
       <!-- 弹窗区域 -->
       <el-dialog title="驳回理由" :visible.sync="dialogVisible" width="30%">
         <el-input type="textarea" v-model="recordReason"></el-input>
         <span slot="footer" class="dialog-footer">
           <el-button @click="dialogVisible = false">取 消</el-button>
           <el-button type="danger" @click="notPassdBnt">确 定</el-button>
-        </span>
-      </el-dialog>
-      <!-- 歌谱弹窗 -->
-      <el-dialog title="歌谱" :visible.sync="showWord" width="50%">
-        <img :src="this.original_word" alt="" />
-        <span slot="footer" class="dialog-footer">
-          <el-button @click="showWord = false">取 消</el-button>
-          <el-button type="danger" @click="showWord = false">确 定</el-button>
-        </span>
-      </el-dialog>
-      <!-- 承诺书弹窗 -->
-      <el-dialog title="承诺书" :visible.sync="showCommitment" width="50%">
-        <img :src="this.commitment" alt="" />
-        <span slot="footer" class="dialog-footer">
-          <el-button @click="showCommitment = false">取 消</el-button>
-          <el-button type="danger" @click="showCommitment = false"
-            >确 定</el-button
-          >
         </span>
       </el-dialog>
     </div>
@@ -159,8 +153,7 @@ export default {
       stuId: "", //歌曲id
       tableName: "", //曲目类型
       dialogVisible: false, //控制对话框
-      showWord: false, //歌谱显示
-      showCommitment: false, //承诺书显示
+
       recordReason: "", //驳回理由
       original_word: "", //歌谱
       commitment: "", //承诺书
@@ -185,7 +178,6 @@ export default {
           state: 1,
         })
         .then((res) => {
-          console.log(res.data.data);
           const list = res.data.data[0];
           this.maker = res.data.data[1];
           this.makeSong = res.data.data[2];
@@ -269,25 +261,31 @@ export default {
     position: relative;
     #aud {
       position: absolute;
-      top: 95px;
+      top: 18px;
       left: 36%;
     }
   }
+  img {
+    width: 200px;
+    height: 100px;
+  }
   .bnt {
     position: absolute;
-    bottom: -90px;
+    bottom: -86px;
     left: 27%;
     .el-button {
       margin-left: 150px;
     }
   }
   .png {
-    margin: 20px 14px;
-    a {
-      color: rgb(6, 109, 243);
+    position: absolute;
+    top: -382px;
+    left: 779px;
+    img {
+      vertical-align: middle;
     }
-    :nth-child(2) {
-      margin-left: 30px;
+    div {
+      margin-top: 50px;
     }
   }
 }
